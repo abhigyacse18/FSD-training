@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple JS Quiz</title>
+</head>
+<body>
+
+  <h2>College JS Quiz</h2>
+  <div id="quiz-box"></div>
+  <button onclick="checkAnswer()">Submit</button>
+  <p id="result"></p>
+
+  <script>
+    // Array of quiz questions
+    let questions = [
+      {
+        question: "What does HTML stand for?",
+        options: ["Hyper Trainer Marking Language", "Hyper Text Markup Language", "Hyper Text Marketing Language", "Hyperlink Text Markup Language"],
+        correctAnswer: 1
+      },
+      {
+        question: "Which symbol is used for comments in JavaScript?",
+        options: ["<!-- -->", "//", "**", "##"],
+        correctAnswer: 1
+      },
+      {
+        question: "Which of these is a JavaScript data type?",
+        options: ["Number", "Character", "Float", "Integer"],
+        correctAnswer: 0
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    // Show the current question and its options
+    function loadQuestion() {
+      let q = questions[current];
+      let html = "<h3>" + q.question + "</h3>";
+
+      for (let i = 0; i < q.options.length; i++) {
+        html += "<input type='radio' name='option' value='" + i + "'> " + q.options[i] + "<br>";
+      }
+
+      document.getElementById("quiz-box").innerHTML = html;
+    }
+
+    // Check the selected answer
+    function checkAnswer() {
+      let options = document.getElementsByName("option");
+      let selected = -1;
+
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+          selected = i;
+        }
+      }
+
+      if (selected === -1) {
+        alert("Please select an answer!");
+        return;
+      }
+
+      if (selected === questions[current].correctAnswer) {
+        score++;
+      }
+
+      current++;
+
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("quiz-box").innerHTML = "<h3>Quiz Finished!</h3>";
+        document.getElementById("result").innerHTML = "Your score: " + score + " out of " + questions.length;
+      }
+    }
+
+    // Start the quiz
+    loadQuestion();
+  </script>
+
+</body>
+</html>
